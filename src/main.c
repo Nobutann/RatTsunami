@@ -29,6 +29,11 @@ int main(void)
         {
             currentScreen = RunOptions(&config);
         }
+
+        if (currentScreen == SCREEN_CREDITS)
+        {
+            currentScreen = RunCredits();
+        }
     }
 
     CloseWindow();
