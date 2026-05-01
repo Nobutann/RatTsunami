@@ -6,7 +6,7 @@
 
 typedef enum { TELA_MENU, TELA_OPCOES, TELA_CREDITOS } Tela;
 
-int main(void) {
+/*int main(void) {
   InitWindow(800, 450, "Jogo AED");
   SetWindowState(FLAG_WINDOW_RESIZABLE);
   SetExitKey(KEY_DELETE);
@@ -78,3 +78,4 @@ int main(void) {
   CloseWindow();
   return 0;
 }
+*/

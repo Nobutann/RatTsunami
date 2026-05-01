@@ -4,7 +4,7 @@
 
 GameScreen RunStart()
 {
-    const char optionsPT[4][9] = 
+    const char* optionsPT[] = 
     {
         "Jogar",
         "Opções",
@@ -29,7 +29,7 @@ GameScreen RunStart()
 
     int optionsCount = sizeof(optionsPT) / sizeof(optionsPT[0]);
     Rectangle optionsRects[optionsCount];
-    BuildOptionRects(optionsRects, (const char**)optionsPT, optionsCount, menuFontSize, currentWidth / 2, startY, spacing);
+    BuildOptionRects(optionsRects, optionsPT, optionsCount, menuFontSize, currentWidth / 2, startY, spacing);
 
     while (!WindowShouldClose())
     {
@@ -59,12 +59,27 @@ GameScreen RunStart()
 
             const char* title = "RatTsunami";
             int titleSize = currentHeight / 10;
-            DrawText(title, (currentHeight / 2) - (MeasureText(title, titleSize) / 2), currentHeight / 6, titleSize, DARKBLUE);
+            DrawText(title, (currentWidth / 2) - (MeasureText(title, titleSize) / 2), currentHeight / 6, titleSize, DARKBLUE);
 
+            Vector2 mouse = GetMousePosition();
             for (int i = 0; i < optionsCount; i++)
             {
-                DrawText(optionsPT[i], optionsRects[i].x, optionsRects[i].y, menuFontSize, DARKGRAY);
+                bool hover = CheckCollisionPointRec(mouse, optionsRects[i]);
+                Color color;
+                if (hover)
+                {
+                    color = YELLOW;
+                    DrawRectangleLinesEx(optionsRects[i], 2, GREEN);
+                }
+                else
+                {
+                    color = DARKGRAY;
+                }
+
+                DrawText(optionsPT[i], optionsRects[i].x, optionsRects[i].y, menuFontSize, color);
             }
         EndDrawing();
     }
+
+    return SCREEN_EXIT;
 }

@@ -12,4 +12,6 @@ typedef enum
     SCREEN_EXIT
 } GameScreen;
 
+GameScreen RunStart();
+
 #endif
