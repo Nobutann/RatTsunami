@@ -22,10 +22,38 @@ void UpdateHairyLeg(HairyLeg *leg, Rectangle playerRect, float deltaTime) {
         } else {
             leg->direction = -1; // rato ta na esquerda
         }
-            leg->timer += deltaTime;
-            if (leg->timer > 3.0f) {
-                leg->state = HL_JUMPING_UP;
-                leg->timer = 0.0f;
+        leg->timer += deltaTime;
+        if (leg->timer > 3.0f) {
+            int chance = GetRandomValue(1, 100);
+
+            if (leg->health > 70) {
+                if (chance <= 60) {
+                    leg->state = HL_KICKING;     // 60% de chance
+                } else if (chance <= 80) {
+                    leg->state = HL_SWEEPING;    // 20% de chance
+                } else {
+                    leg->state = HL_JUMPING_UP;  // 20% de chance
+                }
+            }
+            else if (leg->health > 40) {
+                if (chance <= 33) {
+                    leg->state = HL_KICKING;     // ~33% de chance
+                } else if (chance <= 66) {
+                    leg->state = HL_SWEEPING;    // ~33% de chance
+                } else {
+                    leg->state = HL_JUMPING_UP;  // ~34% de chance
+                }
+            }
+            else {
+                if (chance <= 40) {
+                    leg->state = HL_JUMPING_UP;  // 40% de chance
+                } else if (chance <= 80) {
+                    leg->state = HL_SWEEPING;    // 40% de chance
+                } else {
+                    leg->state = HL_KICKING;     // 20% de chance
+                }
+            }
+            leg->timer = 0.0f;
             }
             break;
 
