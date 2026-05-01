@@ -16,5 +16,6 @@ typedef enum
 GameScreen RunStart();
 GameScreen RunOptions(Config *config);
 GameScreen RunCredits();
+GameScreen RunGame(Config *config);
 
 #endif
