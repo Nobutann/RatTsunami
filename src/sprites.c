@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "sprites.h"
 
+#define FRAME_TIME 0.08f
+
 Animation LoadAnimation(const char* path, int frameCount, float frameTime)
 {
     Animation animation = {0};
@@ -44,21 +46,33 @@ void UnloadLayeredAnimation(LayeredAnimation *layeredAnimation)
 
 void LoadPlayerSprites(PlayerSprites *playerSprites)
 {
-    playerSprites->walkRight.layerCount = 3;
-    playerSprites->walkRight.layers[0] = LoadAnimation("assets/sprites/Player/Pernas_raton-Sheet.png", 8, 0.15f);
-    playerSprites->walkRight.layers[1] = LoadAnimation("assets/sprites/Player/walkFront/Body_running_raton-Sheet.png", 8, 0.15f);
-    playerSprites->walkRight.layers[2] = LoadAnimation("assets/sprites/Player/Head_raton-Sheet.png", 8, 0.15f);
+    playerSprites->walkFront.layerCount = 3;
+    playerSprites->walkFront.layers[0] = LoadAnimation("assets/sprites/Player/walkFront/Running_legs_forward-Sheet.png", 8, FRAME_TIME);
+    playerSprites->walkFront.layers[1] = LoadAnimation("assets/sprites/Player/walkFront/Running_body_foward-Sheet.png", 8, FRAME_TIME);
+    playerSprites->walkFront.layers[2] = LoadAnimation("assets/sprites/Player/Head_running-Sheet.png", 8, FRAME_TIME);
 
-    playerSprites->jump.layerCount = 1;
-    playerSprites->jump.layers[0] = LoadAnimation("assets/sprites/Player/jump/Jump_raton.png", 1, 0.15f);
+    playerSprites->walkBackwards.layerCount = 3;
+    playerSprites->walkBackwards.layers[0] = LoadAnimation("assets/sprites/Player/walkBack/Running_legs_backwards-Sheet.png", 8, FRAME_TIME);
+    playerSprites->walkBackwards.layers[1] = LoadAnimation("assets/sprites/Player/walkBack/Running_body_backward.png", 1, FRAME_TIME);
+    playerSprites->walkBackwards.layers[2] = LoadAnimation("assets/sprites/Player/Head_running-Sheet.png", 8, FRAME_TIME);
+
+    playerSprites->jumpUp.layerCount = 1;
+    playerSprites->jumpUp.layers[0] = LoadAnimation("assets/sprites/Player/jump/Jump_up.png", 1, FRAME_TIME);
+
+    playerSprites->jumpDown.layerCount = 1;
+    playerSprites->jumpDown.layers[0] = LoadAnimation("assets/sprites/Player/jump/Jump_down.png", 1, FRAME_TIME);
 
     playerSprites->idle.layerCount = 1;
-    playerSprites->idle.layers[0] = LoadAnimation("assets/sprites/Player/idle/Raton_idle-Sheet.png", 6, 0.15f);
+    playerSprites->idle.layers[0] = LoadAnimation("assets/sprites/Player/idle/Idle_complete-Sheet.png", 6, FRAME_TIME);
 }
 
 void UnloadPlayerSprites(PlayerSprites *playerSprites)
 {
-    UnloadLayeredAnimation(&playerSprites->walkRight);
+    UnloadLayeredAnimation(&playerSprites->walkFront);
+    UnloadLayeredAnimation(&playerSprites->idle);
+    UnloadLayeredAnimation(&playerSprites->jumpUp);
+    UnloadLayeredAnimation(&playerSprites->jumpDown);
+    UnloadLayeredAnimation(&playerSprites->walkBackwards);
 }
 
 void UpdateAnimation(Animation *animation, float dt)

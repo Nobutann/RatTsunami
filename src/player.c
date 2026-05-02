@@ -8,7 +8,9 @@ void InitPlayer(Player *player, Vector2 initialPos, float speed)
     player->velocity = (Vector2) {0, 0};
     player->speed = speed;
     player->onGround = true;
-    player->currentAnim = &player->sprites.idle;
+    player->currentAnim = &player->sprites.walkFront;
+    player->isBossFighting = false;
+    player->facingRight = false;
 }
 
 void UpdatePlayer(Player *player, float dt)
@@ -19,24 +21,44 @@ void UpdatePlayer(Player *player, float dt)
         player->facingRight = false;
         if (player->onGround)
         {
-            player->currentAnim = &player->sprites.walkRight;
+            player->currentAnim = &player->sprites.walkFront;
         }
     }
     else if (IsKeyDown(KEY_A))
     {
         player->velocity.x = -player->speed;
-        player->facingRight = true;
-        if (player->onGround)
+        if (player->isBossFighting)
         {
-            player->currentAnim = &player->sprites.walkRight;
+            player->facingRight = true;
+            if (player->onGround)
+            {
+                player->currentAnim = &player->sprites.walkFront;
+            }
+        }
+        else
+        {
+            if (player->onGround)
+            {
+                player->currentAnim = &player->sprites.walkBackwards;
+            }
         }
     }
     else
     {
         player->velocity.x = 0;
-        if (player->onGround)
+        if (player->isBossFighting)
         {
-            player->currentAnim = &player->sprites.idle;
+            if (player->onGround)
+            {
+                player->currentAnim = &player->sprites.idle;
+            }
+        }
+        else
+        {
+            if (player->onGround)
+            {
+                player->currentAnim = &player->sprites.walkFront;
+            }
         }
     }
 
@@ -44,12 +66,16 @@ void UpdatePlayer(Player *player, float dt)
     {
         player->velocity.y = JUMP_FORCE;
         player->onGround = false;
-        player->currentAnim = &player->sprites.jump;
+        player->currentAnim = &player->sprites.jumpUp;
     }
 
     if (!player->onGround)
     {
         player->velocity.y += GRAVITY * dt;
+        if (player->velocity.y > 0)
+        {
+            player->currentAnim = &player->sprites.jumpDown;
+        }
     }
 
     player->position.x += player->velocity.x * dt;
