@@ -24,9 +24,10 @@ typedef struct
 typedef struct
 {
     LayeredAnimation idle;
-    LayeredAnimation walkRight;
-    LayeredAnimation walkLeft;
-    LayeredAnimation jump;
+    LayeredAnimation walkFront;
+    LayeredAnimation walkBackwards;
+    LayeredAnimation jumpUp;
+    LayeredAnimation jumpDown;
 } PlayerSprites;
 
 Animation LoadAnimation(const char* path, int frameCount, float frameTime);

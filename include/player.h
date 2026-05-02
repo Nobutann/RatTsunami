@@ -18,6 +18,7 @@ typedef struct
     PlayerSprites sprites;
     LayeredAnimation *currentAnim;
     bool facingRight;
+    bool isBossFighting;
 } Player;
 
 void InitPlayer(Player *player, Vector2 initialPos, float speed);
