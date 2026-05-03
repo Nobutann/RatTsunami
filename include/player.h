@@ -4,9 +4,9 @@
 #include <raylib.h>
 #include "sprites.h"
 
-#define GRAVITY     800.0f
-#define JUMP_FORCE  -400.0f
-#define SPEED       500.0f
+#define GRAVITY 800.0f
+#define JUMP_FORCE -400.0f
+#define SPEED 500.0f
 #define GROUND_RATIO 0.82f
 #define SIDEWALK_THICKNESS_RATIO 0.08f
 

@@ -118,17 +118,17 @@ int main(void)
                     for (int i = 0; i < MAX_ENEMIES; i++) {
                         bool triggerP1 = (sinalPassaro1 && !spawnP1 && !passaro1[i].ativo) ? (spawnP1 = true) : false;
                         bool triggerP2 = (sinalPassaro2 && !spawnP2 && !passaro2[i].ativo) ? (spawnP2 = true) : false;
-                        bool triggerB  = (sinalBike     && !spawnB  && !bike[i].ativo)      ? (spawnB  = true) : false;
-                        bool triggerM  = (sinalMadeira  && !spawnM  && !madeira[i].ativo)   ? (spawnM  = true) : false;
-                        bool triggerC  = (sinalCaboclo  && !spawnC  && !caboclo[i].ativo)   ? (spawnC  = true) : false;
-                        bool triggerPx = (sinalPeixe    && !spawnPx && !peixe[i].ativo)     ? (spawnPx = true) : false;
+                        bool triggerB = (sinalBike && !spawnB && !bike[i].ativo) ? (spawnB = true) : false;
+                        bool triggerM = (sinalMadeira && !spawnM && !madeira[i].ativo) ? (spawnM = true) : false;
+                        bool triggerC = (sinalCaboclo && !spawnC && !caboclo[i].ativo) ? (spawnC = true) : false;
+                        bool triggerPx = (sinalPeixe && !spawnPx && !peixe[i].ativo) ? (spawnPx = true) : false;
 
                         AtualizarDesenharPassaro1(&passaro1[i], currentWidth, currentHeight, triggerP1, 0, texPassaro1);
                         AtualizarDesenharPassaro2(&passaro2[i], currentWidth, currentHeight, triggerP2, 0, texPassaro2);
-                        AtualizarDesenharBike(&bike[i],         currentWidth, currentHeight, triggerB,  0, texBike);
-                        AtualizarDesenharMadeira(&madeira[i],   currentWidth, currentHeight, triggerM,  0, texMadeira);
-                        AtualizarDesenharCaboclo(&caboclo[i],   currentWidth, currentHeight, triggerC,  0, texCaboclo);
-                        AtualizarDesenharPeixe(&peixe[i],       currentWidth, currentHeight, triggerPx, 0, texPeixe);
+                        AtualizarDesenharBike(&bike[i], currentWidth, currentHeight, triggerB, 0, texBike);
+                        AtualizarDesenharMadeira(&madeira[i], currentWidth, currentHeight, triggerM, 0, texMadeira);
+                        AtualizarDesenharCaboclo(&caboclo[i], currentWidth, currentHeight, triggerC, 0, texCaboclo);
+                        AtualizarDesenharPeixe(&peixe[i], currentWidth, currentHeight, triggerPx, 0, texPeixe);
                     }
 
                     DrawPlayer(&player, playerScale);

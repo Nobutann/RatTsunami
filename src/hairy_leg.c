@@ -77,8 +77,8 @@ void UpdateHairyLeg(HairyLeg *leg, Rectangle playerRect, float deltaTime, float 
             leg->rect.y += 2000 * deltaTime;
             if (leg->rect.y >= leg->groundY - currentSpriteH) {
                 leg->rect.y = leg->groundY - currentSpriteH;
-                leg->waveLeft  = (Shockwave){ {leg->rect.x,                    leg->groundY - 50, 50, 70}, {1000, 0}, true };
-                leg->waveRight = (Shockwave){ {leg->rect.x + leg->rect.width,  leg->groundY - 50, 50, 70}, {1000, 0}, true };
+                leg->waveLeft = (Shockwave){ {leg->rect.x, leg->groundY - 50, 50, 70}, {1000, 0}, true };
+                leg->waveRight = (Shockwave){ {leg->rect.x + leg->rect.width, leg->groundY - 50, 50, 70}, {1000, 0}, true };
 
                 leg->state = HL_VULNERABLE;
                 leg->sprites.idle.currentFrame = 0;
@@ -139,9 +139,9 @@ void UpdateHairyLeg(HairyLeg *leg, Rectangle playerRect, float deltaTime, float 
         case HL_IDLE:
         case HL_VULNERABLE: leg->currentAnim = &leg->sprites.idle; break;
         case HL_JUMPING_UP: leg->currentAnim = &leg->sprites.jump; break;
-        case HL_FALLING:    leg->currentAnim = &leg->sprites.fall; break;
-        case HL_KICKING:    leg->currentAnim = &leg->sprites.kick; break;
-        case HL_SWEEPING:   leg->currentAnim = &leg->sprites.rasteira; break;
+        case HL_FALLING: leg->currentAnim = &leg->sprites.fall; break;
+        case HL_KICKING: leg->currentAnim = &leg->sprites.kick; break;
+        case HL_SWEEPING: leg->currentAnim = &leg->sprites.rasteira; break;
     }
 
     bool isAttack = (leg->state == HL_KICKING || leg->state == HL_SWEEPING);

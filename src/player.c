@@ -15,7 +15,7 @@ void InitPlayer(Player *player, Vector2 initialPos, float speed)
 
 void UpdatePlayer(Player *player, float dt, float groundY, float scale)
 {
-    float spriteH  = player->sprites.walkFront.layers[0].sheet.height * scale;
+    float spriteH = player->sprites.walkFront.layers[0].sheet.height * scale;
     float feetOffset = spriteH * 1.0f;
 
     if (IsKeyDown(KEY_D))
@@ -99,13 +99,13 @@ Rectangle GetPlayerHitbox(Player *player, float scale)
     if (player->currentAnim && player->currentAnim->layerCount > 0)
     {
         Animation *baseLayer = &player->currentAnim->layers[0];
-        float frameRenderWidth  = baseLayer->frameWidth * scale;
+        float frameRenderWidth = baseLayer->frameWidth * scale;
         float frameRenderHeight = baseLayer->sheet.height * scale;
 
-        float offsetX    = frameRenderWidth  * 0.35f;
-        float offsetY    = frameRenderHeight * 0.30f;
-        float hitboxW    = frameRenderWidth  * 0.35f;
-        float hitboxH    = frameRenderHeight * 0.50f;
+        float offsetX = frameRenderWidth * 0.35f;
+        float offsetY = frameRenderHeight * 0.30f;
+        float hitboxW = frameRenderWidth * 0.35f;
+        float hitboxH = frameRenderHeight * 0.50f;
 
         return (Rectangle){
             player->position.x + offsetX,
