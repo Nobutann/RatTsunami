@@ -148,7 +148,7 @@ void UpdateHairyLeg(HairyLeg *leg, Rectangle playerRect, float deltaTime, float 
 }
 
 void DrawHairyLeg(HairyLeg *leg, float scale) {
-    bool flipX   = (leg->direction == 1);
+    bool flipX = (leg->direction == 1);
     float offsetX = flipX ? -(scale * 75.0f) : -(scale * 100.0f);
     float currentSpriteH = (float)leg->currentAnim->sheet.height * scale;
     float offsetY = 0.0f;

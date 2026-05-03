@@ -4,10 +4,10 @@
 void InitPlayer(Player *player, Vector2 initialPos, float speed)
 {
     LoadPlayerSprites(&player->sprites);
-    player->position    = initialPos;
-    player->velocity    = (Vector2) {0, 0};
-    player->speed       = speed;
-    player->onGround    = true;
+    player->position = initialPos;
+    player->velocity = (Vector2) {0, 0};
+    player->speed = speed;
+    player->onGround = true;
     player->currentAnim = &player->sprites.walkFront;
     player->isBossFighting = false;
     player->facingRight = false;
@@ -23,7 +23,9 @@ void UpdatePlayer(Player *player, float dt, float groundY, float scale)
         player->velocity.x = player->speed;
         player->facingRight = false;
         if (player->onGround)
+        {
             player->currentAnim = &player->sprites.walkFront;
+        }
     }
     else if (IsKeyDown(KEY_A))
     {
@@ -32,12 +34,16 @@ void UpdatePlayer(Player *player, float dt, float groundY, float scale)
         {
             player->facingRight = true;
             if (player->onGround)
+            {
                 player->currentAnim = &player->sprites.walkFront;
+            }
         }
         else
         {
             if (player->onGround)
+            {
                 player->currentAnim = &player->sprites.walkBackwards;
+            }
         }
     }
     else
@@ -46,19 +52,23 @@ void UpdatePlayer(Player *player, float dt, float groundY, float scale)
         if (player->isBossFighting)
         {
             if (player->onGround)
+            {
                 player->currentAnim = &player->sprites.idle;
+            }
         }
         else
         {
             if (player->onGround)
+            {
                 player->currentAnim = &player->sprites.walkFront;
+            }
         }
     }
 
     if ((IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_W)) && player->onGround)
     {
         player->velocity.y = JUMP_FORCE;
-        player->onGround   = false;
+        player->onGround = false;
         player->currentAnim = &player->sprites.jumpUp;
     }
 
@@ -66,7 +76,9 @@ void UpdatePlayer(Player *player, float dt, float groundY, float scale)
     {
         player->velocity.y += GRAVITY * dt;
         if (player->velocity.y > 0)
+        {
             player->currentAnim = &player->sprites.jumpDown;
+        }
     }
 
     player->position.x += player->velocity.x * dt;
@@ -76,7 +88,7 @@ void UpdatePlayer(Player *player, float dt, float groundY, float scale)
     {
         player->position.y = groundY - feetOffset;
         player->velocity.y = 0;
-        player->onGround   = true;
+        player->onGround = true;
     }
 
     UpdateLayeredAnimation(player->currentAnim, dt);

@@ -87,18 +87,18 @@ int main(void)
                 }
 
                 float dt = GetFrameTime();
-                int currentWidth  = GetScreenWidth();
+                int currentWidth = GetScreenWidth();
                 int currentHeight = GetScreenHeight();
-                float groundY      = currentHeight * GROUND_RATIO;
-                float playerScale  = (float)currentHeight * 0.45f / 252.0f;
-                float bossScale    = (float)currentHeight * 0.40f / 252.0f;
+                float groundY = currentHeight * GROUND_RATIO;
+                float playerScale = (float)currentHeight * 0.45f / 252.0f;
+                float bossScale = (float)currentHeight * 0.40f / 252.0f;
 
                 bool sinalPassaro1 = IsKeyPressed(KEY_ONE);
                 bool sinalPassaro2 = IsKeyPressed(KEY_TWO);
-                bool sinalBike     = IsKeyPressed(KEY_B);
-                bool sinalMadeira  = IsKeyPressed(KEY_M);
-                bool sinalCaboclo  = IsKeyPressed(KEY_C);
-                bool sinalPeixe    = IsKeyPressed(KEY_P);
+                bool sinalBike = IsKeyPressed(KEY_B);
+                bool sinalMadeira = IsKeyPressed(KEY_M);
+                bool sinalCaboclo = IsKeyPressed(KEY_C);
+                bool sinalPeixe = IsKeyPressed(KEY_P);
 
                 UpdateBackground(&bg, dt);
 
