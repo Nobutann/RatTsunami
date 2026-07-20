@@ -29,6 +29,23 @@ static float GetSharkDashSpeedMultiplier(GameplayDifficulty difficulty) {
     }
 }
 
+// The jump attack's arc (launch speed + gravity) is the same on every
+// difficulty now, using the old Hard-mode arc (1472 * 1.08 dash multiplier)
+// as the shared baseline. Only the number of water droplets it drops during
+// the arc scales with difficulty.
+#define SHARK_JUMP_LAUNCH_SPEED 1589.76f
+#define SHARK_JUMP_GRAVITY 1200.0f
+
+static int GetSharkArcDropCount(GameplayDifficulty difficulty) {
+    switch (difficulty) {
+        case GAMEPLAY_DIFFICULTY_HELENA: return 2;
+        case GAMEPLAY_DIFFICULTY_EASY: return 3;
+        case GAMEPLAY_DIFFICULTY_HARD: return 5;
+        case GAMEPLAY_DIFFICULTY_MEDIUM:
+        default: return 4;
+    }
+}
+
 static float GetSharkProjectileSpeedMultiplier(GameplayDifficulty difficulty) {
     switch (difficulty) {
         case GAMEPLAY_DIFFICULTY_HELENA: return 0.75f;
@@ -269,7 +286,7 @@ void UpdateShark(Shark *shark, Rectangle playerRect, float deltaTime, int screen
                 } else {
                     shark->state = SHARK_ARC_ATTACK;
                     shark->velocity.x = -850.0f * GetSharkDashSpeedMultiplier(difficulty);
-                    shark->velocity.y = -1472.0f * GetSharkDashSpeedMultiplier(difficulty);
+                    shark->velocity.y = -SHARK_JUMP_LAUNCH_SPEED;
                     shark->arcDrops = 0;
                     shark->animFrame = 0;
                     shark->animTimer = 0.0f;
@@ -353,29 +370,24 @@ void UpdateShark(Shark *shark, Rectangle playerRect, float deltaTime, int screen
         case SHARK_ARC_ATTACK:
             shark->rect.x += shark->velocity.x * deltaTime;
             shark->rect.y += shark->velocity.y * deltaTime;
-            shark->velocity.y += 1200.0f * deltaTime; 
+            shark->velocity.y += SHARK_JUMP_GRAVITY * deltaTime;
             shark->timer += deltaTime;
 
-            if (shark->arcDrops == 0 && shark->timer >= 0.2f) {
-                FireBubble(shark, difficulty);
-                shark->arcDrops++;
-            } else if (shark->arcDrops == 1 && shark->timer >= 0.5f) {
-                FireBubble(shark, difficulty);
-                shark->arcDrops++;
-            } else if (shark->arcDrops == 2 && shark->timer >= 0.8f) {
-                FireBubble(shark, difficulty);
-                shark->arcDrops++;
-            } else if (difficulty != GAMEPLAY_DIFFICULTY_HELENA && shark->arcDrops == 3 && shark->timer >= 1.2f) {
-                FireBubble(shark, difficulty);
-                shark->arcDrops++;
+            {
+                static const float arcDropTimes[] = { 0.2f, 0.5f, 0.8f, 1.1f, 1.4f };
+                int targetDrops = GetSharkArcDropCount(difficulty);
+                if (shark->arcDrops < targetDrops && shark->arcDrops < 5 &&
+                    shark->timer >= arcDropTimes[shark->arcDrops]) {
+                    FireBubble(shark, difficulty);
+                    shark->arcDrops++;
+                }
             }
 
             if (shark->rect.y > (float)screenHeight + 100.0f) {
+                shark->rect.x = -1200.0f;
                 shark->rect.y = shark->startPos.y;
-                shark->state = SHARK_DASH_RIGHT;
+                shark->state = SHARK_DASH_WAIT;
                 shark->timer = 0.0f;
-                shark->dashStartX = shark->rect.x;
-                shark->dashSoundCount = 0;
             }
             break;
 
